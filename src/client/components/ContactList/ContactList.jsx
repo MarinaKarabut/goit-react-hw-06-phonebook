@@ -6,11 +6,9 @@ import ContactsListItem from '../ContactListItem'
 
 
 
-
-
-function ContactList({contacts, onDeleteContacts}) {
+function ContactList({contacts, onDeleteContact}) {
   const contactElements = contacts.map(({ id, ...props }) => (
-      <ContactsListItem key={id}  {...props} onClick={()=> onDeleteContacts(id)}
+      <ContactsListItem key={id}  {...props} onClick={()=> onDeleteContact(id)}
       />
     ))
         
@@ -22,20 +20,19 @@ function ContactList({contacts, onDeleteContacts}) {
 };
 
 const getVisibleContacts = (allContacts, filter) => {
-    const normalizedFilter = filter.toLowerCase();
-    if (!filter) {
-      return allContacts
-    }
-
-    return allContacts.filter(({name}) => name.toLowerCase().includes(normalizedFilter));
+  const normalizedFilter = filter.toLowerCase();
+  return allContacts.filter(({ name }) => name.toLowerCase().includes(normalizedFilter));
+  
   };
 
-const mapStateToProps = ({ contacts: { items, filter}}) => ({
-  contacts: getVisibleContacts(items, filter)
+const mapStateToProps = ({ contacts: { items, filter } }) => ({
+    contacts: getVisibleContacts(items, filter)
 })
 
+
+
 const mapDispatchToProps = dispatch => ({
-  onDeleteContacts: (id) => dispatch (contactsActions.deleteContacts(id))
+  onDeleteContact: (id) => dispatch (contactsActions.deleteContact(id))
 }) 
 
 
@@ -49,6 +46,6 @@ ContactList.propTypes = {
         number: PropTypes.string.isRequired,
       }).isRequired,
     ),
-    onDeleteContacts: PropTypes.func.isRequired,
+    onDeleteContact: PropTypes.func.isRequired,
   };
   

@@ -9,7 +9,6 @@ import Button from '../../../shared/components/Button'
 import {fields} from "./fields";
 
 
-
 import {initialState} from "./initialState"
 
 class ContactForm extends  Component {
@@ -20,10 +19,18 @@ class ContactForm extends  Component {
         this.setState({[name]: value})
     }
         
-    handleSubmit = (e)=>{
+    handleSubmit = (e) => {
         e.preventDefault()
-        this.props.onSubmit(this.state)
-        this.reset()
+        const { name, number } = this.state;
+        const { contacts } = this.props
+        const findContact = contacts.find(contact => contact.name.toLowerCase() ===  name.toLowerCase() || contact.number === number)
+        if (!findContact) {
+            this.props.onSubmit(name, number)
+            this.reset()
+            return
+        }
+        alert(`${name}  is already in contacts!` )
+        
     }
 
     reset = () => {
@@ -52,7 +59,7 @@ const mapStateToProps = (state) => ({
 
 
 const mapDispatchToProps = (dispatch) => ({
-    onSubmit: (name, number)=> dispatch(contactsActions.addContacts(name, number))
+    onSubmit: (name, number) => dispatch(contactsActions.addContact(name, number))
 })
 
 
