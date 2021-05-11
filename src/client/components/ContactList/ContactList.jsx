@@ -7,8 +7,8 @@ import ContactsListItem from '../ContactListItem'
 
 
 function ContactList({contacts, onDeleteContact}) {
-  const contactElements = contacts.map(({ id, ...props }) => (
-      <ContactsListItem key={id}  {...props} onClick={()=> onDeleteContact(id)}
+  const contactElements = contacts.map(({ id, ...props }, idx) => (
+      <ContactsListItem key={id}  {...props} onClick={()=> onDeleteContact(idx)}
       />
     ))
         
@@ -32,7 +32,7 @@ const mapStateToProps = ({ contacts: { items, filter } }) => ({
 
 
 const mapDispatchToProps = dispatch => ({
-  onDeleteContact: (id) => dispatch (contactsActions.deleteContact(id))
+  onDeleteContact: (idx) => dispatch (contactsActions.deleteContact(idx))
 }) 
 
 

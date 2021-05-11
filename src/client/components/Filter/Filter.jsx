@@ -7,7 +7,7 @@ import contactsActions from '../../../redux/contacts-actions'
 import styles from './Filter.module.css'
 
 
-function Filter({ value, onChange }) {
+const Filter = ({ value, onChange }) => {
   const id = uuidv4();
     return (
         <label htmlFor={id}>
@@ -23,13 +23,13 @@ function Filter({ value, onChange }) {
     )
 };
 
-const mapStateToProps = (state) => ({
-  value: state.contacts.filter
+const mapStateToProps = ({contacts}) => ({
+  value: contacts.filter
   
 })
 
 const mapDispatchToProps = dispatch =>({
-  onChange: (e) => dispatch(contactsActions.filter(e.target.value))
+  onChange: ({target}) => dispatch(contactsActions.filter(target.value))
 })
 
 
